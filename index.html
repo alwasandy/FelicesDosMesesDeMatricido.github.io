@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 𝑖l mio fiore </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url(./images/page-bg.jpeg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .lace-border {
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .lace-top {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 24px;
+      background-image: url('./images/lace-top.png');
+      background-repeat: repeat-x;
+      background-position: top;
+      background-size: auto 24px;
+    }
+
+    .lace-bottom {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 24px;
+      background-image: url('./images/lace-bottom.png');
+      background-repeat: repeat-x;
+      background-position: bottom;
+      background-size: auto 24px;
+    }
+
+    .lace-left {
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 100%;
+      background-image: url('./images/lace-left.png');
+      background-repeat: repeat-y;
+      background-position: left;
+      background-size: 26px auto;
+    }
+
+    .lace-right {
+      top: 0;
+      right: 0;
+      width: 26px;
+      height: 100%;
+      background-image: url('./images/lace-right.png');
+      background-repeat: repeat-y;
+      background-position: right;
+      background-size: 26px auto;
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 min-h-screen flex items-center justify-center p-4">
+
+  <!-- tarjeta central -->
+  <main
+    class="bg-gray-50 rounded-2xl shadow-lg border border-rose-100 p-8 sm:p-10 max-w-md w-full text-center flex flex-col items-center gap-4 transition-all relative overflow-hidden">
+    <!-- Bordes de encaje -->
+    <div class="lace-border lace-top"></div>
+    <div class="lace-border lace-bottom"></div>
+    <div class="lace-border lace-left"></div>
+    <div class="lace-border lace-right"></div>
+
+    <!-- Imagen 1 -->
+    <div class="w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center overflow-hidden rounded-xl bg-rose-50/50">
+      <img id="card-image" src="" alt="" class="max-w-full max-h-full object-contain">
+    </div>
+
+    <!-- titulo principal -->
+    <h1 id="card-title" class="text-xl sm:text-2xl font-bold text-slate-800"> título provisional, si ola</h1>
+
+    <!-- Subtítulo -->
+    <p id="card-subtitle" class="text-slate-600 font-medium text-sm sm:text-base"></p>
+
+    <!-- Carita / Kaomoji -->
+    <p id="card-kaomoji" class="text-slate-400 text-sm font-mono"></p>
+
+    <!-- Mensaje largo -->
+    <div id="card-message"
+      class="hidden text-left bg-rose-50/40 p-4 rounded-xl border border-rose-100 text-slate-700 text-sm leading-relaxed max-h-60 overflow-y-auto w-full whitespace-pre-line">
+    </div>
+
+    <!-- Contenedor de Botones -->
+    <div id="buttons-container" class="flex flex-wrap justify-center gap-3 w-full pt-2"></div>
+  </main>
+
+  <script>
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO LO DE ACÁ ABAJO ES IMPORTANTE, solo cambia los parametros que dicen "title, subtitle, kaomoji y text" //
+    //                                                                                                            //
+    // Todo lo que vayas a tocar, debe seguir estando dentro de los '' o no va a funcionar                        //
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const steps = {
+      welcome: {
+        image: './images/welcome.jpeg',
+        title: '',
+        subtitle: '¡Felices dos meses! ♡',
+        kaomoji: ':3',
+        buttons: [
+          {text: 'Siguiente', action: () => goToStep('envelope')}
+        ]
+      },
+      envelope: {
+        image: './images/carta.jpeg',
+        title: '¡Te llegó una carta!',
+        subtitle: '',
+        kaomoji: 'dwb',
+        buttons: [
+          {text: 'abrir', action: () => goToStep('letter'), primary: true},
+          {text: 'No abrir', action: () => goToStep('reject'), secondary: true}
+        ]
+      },
+
+      reject: {
+        image: './images/penita.jpeg',
+        title: "eres el six de mi seben",
+        subtitle: 'eres el seben de mi sex',
+        kaomoji: '(ó﹏ò)',
+        buttons: [
+          {text: '¿De nuevo?', action: () => goToStep('envelope')}
+        ]
+      },
+      letter: {
+        image: './images/image-1.jpeg',
+        title: 'Querido Isaac',
+        subtitle: '',
+        kaomoji: '(,,•́✧•̀,,)',
+
+        // En el "message" de abajo, asegurate que lo que escribas lo pongas entre los `` y no habrán problemas //
+
+        message: `dos meses contigo pueden parecer poco tiempo, pero para mí han sido suficientes para darme cuenta de lo bonito que es tenerte en mi vida. gracias por cada conversación, cada risa, cada pequeño momento y por hacerme sentir que incluso los días más simples pueden convertirse en recuerdos que quiero guardar para siempre.
+
+me gusta todo lo que poco a poco hemos ido construyendo, la manera en que te has convertido en alguien tan especial para mí y como, sin darme cuenta, he comenzado a encontrar un poquito de felicidad en cada cosa que comparto contigo. no se que nos tenga preparado el tiempo, pero quiero seguir descubriéndolo a tu lado, seguir conociendote, queriendote y encontrando nuevas razones para elegirte cada día.
+
+felices dos meses, mi amor. ojala esto sea apenas el comienzo de una historia muy bonita, de esas que se construyen despacito, con amor, paciencia y muchas ganas de quedarse. te amo, y me hace feliz que seas tu con quien estoy compartiendo todo esto (te mandare un link en wsp)♡`,
+        buttons: [
+          {text: 'Comenzar de nuevo', action: () => goToStep('welcome')}
+        ]
+      }
+    };
+
+    // No toques nada de acá abajo //
+
+    function goToStep(stepKey) {
+      const step = steps[stepKey];
+      if (!step) return;
+
+      document.getElementById('card-image').src = step.image;
+      document.getElementById('card-title').textContent = step.title;
+
+      const subEl = document.getElementById('card-subtitle');
+      if (step.subtitle) {
+        subEl.textContent = step.subtitle;
+        subEl.classList.remove('hidden');
+      } else {
+        subEl.classList.add('hidden');
+      }
+
+      const kaoEl = document.getElementById('card-kaomoji');
+      if (step.kaomoji) {
+        kaoEl.textContent = step.kaomoji;
+        kaoEl.classList.remove('hidden');
+      } else {
+        kaoEl.classList.add('hidden');
+      }
+
+      const msgEl = document.getElementById('card-message');
+      if (step.message) {
+        msgEl.innerText = step.message;
+        msgEl.classList.remove('hidden');
+      } else {
+        msgEl.classList.add('hidden');
+      }
+
+      const btnContainer = document.getElementById('buttons-container');
+      btnContainer.innerHTML = '';
+
+      step.buttons.forEach(btnConfig => {
+        const btn = document.createElement('button');
+        btn.textContent = btnConfig.text;
+
+        if (btnConfig.secondary) {
+          btn.className = 'px-5 py-2.5 rounded-full text-sm font-semibold bg-emerald-300 text-slate-800 hover:bg-emerald-400 transition-colors cursor-pointer';
+        } else {
+          btn.className = 'px-6 py-2.5 rounded-full text-sm font-semibold bg-rose-400 text-white hover:bg-rose-500 shadow-sm transition-colors cursor-pointer';
+        }
+
+        btn.onclick = btnConfig.action;
+        btnContainer.appendChild(btn);
+      });
+    }
+
+    goToStep('welcome');
+  </script>
+</body>
+
+</html>
